@@ -9,7 +9,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import styles from "../../assets/styles/login.styles";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,13 +21,20 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
+
   const { isLoading, login, isCheckingAuth } = useAuthStore();
 
-  const handleLogin = async () => {
-    const result = await login(email, password);
+const handleLogin = async () => {
+  const result = await login(email, password);
 
-    if (!result.success) Alert.alert("Error", result.error);
-  };
+  if (result.success) {
+    router.replace("/(tabs)");
+  } else {
+    Alert.alert("Error", result.error);
+  }
+};
 
   if (isCheckingAuth) return null;
 
