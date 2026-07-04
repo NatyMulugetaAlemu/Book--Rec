@@ -48,7 +48,7 @@ router.get("/", protectRoute, async (req, res) => {
       .sort({ createdAt: -1 }) // desc
       .skip(skip)
       .limit(limit)
-      .populate("user", "username profilePic");
+      .populate("user", "username profilePic"); 
 
     const totalBooks = await Book.countDocuments();
 

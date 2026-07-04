@@ -2,10 +2,11 @@ import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import express from "express";
+import { protectRoute } from "../middleware/protectRoute.js";
 
 const router = express.Router();
 
-export const signup = async (req, res) => {
+router.post("/signup", async (req, res) => {
     const { username, email, password } = req.body;
     try {
         if (!username || !email || !password) {
@@ -61,9 +62,9 @@ export const signup = async (req, res) => {
         console.log("Error in signup controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+});
 
-export const login = async (req, res) => {
+router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -91,9 +92,9 @@ export const login = async (req, res) => {
         console.log("Error in login controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+});
 
-export const logout = (req, res) => {
+router.post("/logout", (req, res) => {
     try {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out successfully" });
@@ -101,17 +102,15 @@ export const logout = (req, res) => {
         console.log("Error in logout controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+});
 
-
-
-export const checkAuth = (req, res) => {
+router.get("/checkauth", protectRoute,(req, res) => {
     try {
         res.status(200).json(req.user);
     } catch (error) {
         console.log("Error in checkAuth controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });
     }
-};
+});
 
 export default router;
