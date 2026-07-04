@@ -50,10 +50,13 @@ router.post("/signup", async (req, res) => {
 
             res.status(201).json({
                 token,
-                _id: newUser._id,
-                username: newUser.username,
-                email: newUser.email,
-                profilePic: newUser.profilePic,
+                user: {
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    profilePic: newUser.profilePic,
+                    createdAt: user.createdAt,
+                },
             });
         } else {
             res.status(400).json({ message: "Invalid user data" });
@@ -83,10 +86,13 @@ router.post("/login", async (req, res) => {
 
         res.status(200).json({
             token,
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            profilePic: user.profilePic,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                profilePic: newUser.profilePic,
+                createdAt: user.createdAt,
+            },
         });
     } catch (error) {
         console.log("Error in login controller", error.message);
@@ -104,7 +110,7 @@ router.post("/logout", (req, res) => {
     }
 });
 
-router.get("/checkauth", protectRoute,(req, res) => {
+router.get("/checkauth", protectRoute, (req, res) => {
     try {
         res.status(200).json(req.user);
     } catch (error) {
