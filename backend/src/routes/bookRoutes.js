@@ -1,7 +1,7 @@
 import express from "express";
 import cloudinary from "../lib/cloudinary.js";
 import Book from "../models/Book.js";
-import protectRoute from "../middleware/auth.middleware.js";
+import {protectRoute} from "../middleware/protectRoute.js";
 
 const router = express.Router();
 
@@ -48,7 +48,7 @@ router.get("/", protectRoute, async (req, res) => {
       .sort({ createdAt: -1 }) // desc
       .skip(skip)
       .limit(limit)
-      .populate("user", "username profileImage");
+      .populate("user", "username profilePic");
 
     const totalBooks = await Book.countDocuments();
 

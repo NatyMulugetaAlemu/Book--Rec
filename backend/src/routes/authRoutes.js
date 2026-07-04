@@ -1,12 +1,14 @@
 import { generateToken } from "../lib/utils.js";
-import User from "../models/user.model.js";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import express from "express";
 
+const router = express.Router();
 
 export const signup = async (req, res) => {
-    const { fullName, email, password } = req.body;
+    const { username, email, password } = req.body;
     try {
-        if (!fullName || !email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -30,13 +32,14 @@ export const signup = async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const profileImage = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
+        const profilePic = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
 
 
         const newUser = new User({
-            fullName,
+            username,
             email,
             password: hashedPassword,
+            profilePic,
         });
 
         if (newUser) {
@@ -47,7 +50,7 @@ export const signup = async (req, res) => {
             res.status(201).json({
                 token,
                 _id: newUser._id,
-                fullName: newUser.fullName,
+                username: newUser.username,
                 email: newUser.email,
                 profilePic: newUser.profilePic,
             });
@@ -80,7 +83,7 @@ export const login = async (req, res) => {
         res.status(200).json({
             token,
             _id: user._id,
-            fullName: user.fullName,
+            username: user.username,
             email: user.email,
             profilePic: user.profilePic,
         });
@@ -110,3 +113,5 @@ export const checkAuth = (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+export default router;

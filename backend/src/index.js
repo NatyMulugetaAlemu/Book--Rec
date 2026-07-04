@@ -1,6 +1,6 @@
 import express from "express";
 import "dotenv/config";
-import authRoutes from "./routes/authRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 import bookRoutes from "./routes/bookRoutes.js";
 import { connectDB } from "./lib/db.js";
 import cors from "cors"
