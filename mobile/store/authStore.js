@@ -25,16 +25,9 @@ export const useAuthStore = create((set) => ({
 
       const data = await response.json();
 
-
+      console.log("Response data:", data);
 
       if (!response.ok) throw new Error(data.message || "Something went wrong");
-
-      const user = {
-        _id: data._id,
-        username: data.username,
-        email: data.email,
-        profilePic: data.profilePic,
-      };
 
       await AsyncStorage.setItem("user", JSON.stringify(data.user));
       await AsyncStorage.setItem("token", data.token);

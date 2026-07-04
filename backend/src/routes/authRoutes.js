@@ -36,17 +36,17 @@ router.post("/signup", async (req, res) => {
         const profilePic = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
 
 
-        const newUser = new User({
+        const user = new User({
             username,
             email,
             password: hashedPassword,
             profilePic,
         });
 
-        if (newUser) {
+        if (user) {
             // generate jwt token here
-            const token = generateToken(newUser._id, res);
-            await newUser.save();
+            const token = generateToken(user._id, res);
+            await user.save();
 
             res.status(201).json({
                 token,
@@ -54,9 +54,11 @@ router.post("/signup", async (req, res) => {
                     id: user._id,
                     username: user.username,
                     email: user.email,
-                    profilePic: newUser.profilePic,
+                    profilePic: user.profilePic,
                     createdAt: user.createdAt,
                 },
+
+
             });
         } else {
             res.status(400).json({ message: "Invalid user data" });
@@ -90,7 +92,7 @@ router.post("/login", async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                profilePic: newUser.profilePic,
+                profilePic: user.profilePic,
                 createdAt: user.createdAt,
             },
         });
