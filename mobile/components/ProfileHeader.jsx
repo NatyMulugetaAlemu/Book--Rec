@@ -11,7 +11,7 @@ export default function ProfileHeader() {
 
   return (
     <View style={styles.profileHeader}>
-      <Image source={{ uri: user.profileImage }} style={styles.profileImage} />
+      <Image source={{ uri: user.profilePic  }} style={styles.profileImage} />
 
       <View style={styles.profileInfo}>
         <Text style={styles.username}>{user.username}</Text>

@@ -93,7 +93,7 @@ export default function Create() {
 
       const imageDataUrl = `data:${imageType};base64,${imageBase64}`;
 
-      const response = await fetch(`${API_URL}/api/books`, {
+      const response = await fetch(`${API_URL}/books`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
