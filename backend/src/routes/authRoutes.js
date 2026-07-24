@@ -44,7 +44,6 @@ router.post("/signup", async (req, res) => {
         });
 
         if (user) {
-            // generate jwt token here
             const token = generateToken(user._id, res);
             await user.save();
 

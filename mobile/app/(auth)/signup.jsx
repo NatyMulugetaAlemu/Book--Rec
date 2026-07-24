@@ -11,7 +11,6 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const { user, isLoading, signup, token } = useAuthStore();
 
   const router = useRouter();
@@ -31,7 +30,7 @@ export default function Signup() {
         <View style={styles.card}>
           {/* HEADER */}
           <View style={styles.header}>
-            <Text style={styles.title}>BookWorm🐛</Text>
+            <Text style={styles.title}>Book-Rec📚</Text>
             <Text style={styles.subtitle}>Share your favorite reads</Text>
           </View>
 

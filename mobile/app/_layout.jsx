@@ -5,15 +5,14 @@ import { StatusBar } from "expo-status-bar";
 import { useAuthStore } from "../store/authStore";
 import { useEffect } from "react";
 import { useState } from "react";
+
 export default function RootLayout() {
   const router = useRouter();
   const segments = useSegments();
-
   const { checkAuth, user, token } = useAuthStore();
+  const [isReady, setIsReady] = useState(false);
 
-   const [isReady, setIsReady] = useState(false);
-
- useEffect(() => {
+  useEffect(() => {
     const init = async () => {
       await checkAuth();
       setIsReady(true);
